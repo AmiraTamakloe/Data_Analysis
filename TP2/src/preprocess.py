@@ -24,11 +24,13 @@ def summarize_lines(my_df):
     '''
     # DONE : Modify the dataframe, removing the line content and replacing
     # https://stackoverflow.com/questions/39922986/how-do-i-pandas-group-by-to-get-sum
-
-    my_df['PlayerLine'] = my_df.groupby(['Player', 'Act'])['Line'].transform('sum')
-    total_line_per_act = my_df.groupby('Act')['Line'].transform('sum')
-    my_df['PlayerPercent'] = (my_df['PlayerLine'] / total_line_per_act) * 100
-    return my_df
+    my_df = my_df.groupby(['Player', 'Act'])['Line'].sum().reset_index()
+    total_lines_per_act = my_df.groupby('Act')['Line'].sum().reset_index()
+    merged_df = my_df.merge(total_lines_per_act, on='Act', suffixes=('', '_total'))
+    merged_df['PlayerPercent'] = (merged_df['Line'] / merged_df['Line_total']) * 100
+    merged_df.rename(columns={'Line': 'PlayerLine'}, inplace=True)
+    merged_df = merged_df[['Act', 'Player', 'PlayerLine', 'PlayerPercent']]
+    return merged_df
 
 
 def replace_others(my_df):
@@ -54,10 +56,18 @@ def replace_others(my_df):
             The df with all players not in the top
             5 for the play grouped as 'OTHER'
     '''
-    # TODO : Replace players in each act not in the top 5 by a 
-    top_5_players_per_act = my_df.sort_values(by='PlayerLine', ascending=False).groupby('Act').head(5)
+    # DONE
+    my_df.rename(columns={'PlayerLine': 'LineCount','PlayerPercent': 'LinePercent' }, inplace=True)
+    top_5_players_per_act = my_df.sort_values(by='LineCount', ascending=False).groupby('Act').head(5)
     other_players = my_df[~my_df.index.isin(top_5_players_per_act.index)]
-    return my_df
+    other_players_grouped = other_players.groupby('Act').agg({
+        'LineCount': 'sum',
+        'LinePercent': 'sum'
+    }).reset_index()
+    other_players_grouped.columns = ['Act', 'LineCount', 'LinePercent']
+    other_players_grouped['Player'] = 'OTHER'
+    result_df = pd.concat([top_5_players_per_act, other_players_grouped])
+    return result_df
     
 
 
@@ -71,5 +81,5 @@ def clean_names(my_df):
     '''
     # DONE : Clean the player names 
     # https://www.w3resource.com/pandas/series/series-str-capitalize.php#:~:text=The%20str.,capitalize().
-    my_df['Player'] = my_df['Player'].str.capitalize()
+    my_df['Player'] = my_df['Player'].str.title()
     return my_df
