@@ -22,7 +22,7 @@ def summarize_lines(my_df):
             The modified pandas dataframe containing the
             information described above.
     '''
-    # TODO : Modify the dataframe, removing the line content and replacing
+    # DONE : Modify the dataframe, removing the line content and replacing
     # https://stackoverflow.com/questions/39922986/how-do-i-pandas-group-by-to-get-sum
 
     my_df['PlayerLine'] = my_df.groupby(['Player', 'Act'])['Line'].transform('sum')
@@ -54,11 +54,11 @@ def replace_others(my_df):
             The df with all players not in the top
             5 for the play grouped as 'OTHER'
     '''
-    # TODO : Replace players in each act not in the top 5 by a REVOIR
-    
-    
-
+    # TODO : Replace players in each act not in the top 5 by a 
+    top_5_players_per_act = my_df.sort_values(by='PlayerLine', ascending=False).groupby('Act').head(5)
+    other_players = my_df[~my_df.index.isin(top_5_players_per_act.index)]
     return my_df
+    
 
 
 def clean_names(my_df):
@@ -69,7 +69,7 @@ def clean_names(my_df):
         Returns:
             The df with formatted names
     '''
-    # TODO : Clean the player names
+    # DONE : Clean the player names 
     # https://www.w3resource.com/pandas/series/series-str-capitalize.php#:~:text=The%20str.,capitalize().
     my_df['Player'] = my_df['Player'].str.capitalize()
     return my_df
