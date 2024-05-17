@@ -23,7 +23,20 @@ def get_hover_template(name, mode):
             name: The hovered element's player's name
             mode: The current display mode
         Returns:
-            The hover template with the elements descibed above
+            The hover template with the elements described above
     '''
-    # TODO: Generate and return the over template
-    return ''
+    base_template = (
+        f"<span style='font-family: \"Grenze Gotisch\"; font-size: 24px; color: black;'>"
+        f"{name}</span><br>"
+    )
+
+    if mode == MODES['count']:
+        line_info_template = "<span>%{customdata[0]} lines</span>"
+    elif mode == MODES['percent']:
+        line_info_template = "<span>%{customdata[1]:.2f}% of lines</span>"
+    else:
+        raise ValueError("Invalid mode specified")
+
+    full_template = base_template + line_info_template
+
+    return full_template

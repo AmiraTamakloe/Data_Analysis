@@ -24,6 +24,9 @@ def summarize_lines(my_df):
     '''
     # DONE : Modify the dataframe, removing the line content and replacing
     # https://stackoverflow.com/questions/39922986/how-do-i-pandas-group-by-to-get-sum
+
+
+    #ELENA : THE LINECOUNT AND LINEPERCENT DONT HAVE TO CORRECT VALUES, THE WHOLE PLAY IS 600 LINES SO ITS IMPOSSIBLE THAT WE HAVE A CHARACTER THAT HAS 1000+ LINES
     my_df = my_df.groupby(['Player', 'Act'])['Line'].sum().reset_index()
     total_lines_per_act = my_df.groupby('Act')['Line'].sum().reset_index()
     merged_df = my_df.merge(total_lines_per_act, on='Act', suffixes=('', '_total'))
@@ -36,7 +39,7 @@ def summarize_lines(my_df):
 def replace_others(my_df):
     '''
         For each act, keeps the 5 players with the most lines
-        throughout the play and groups the other plyaers
+        throughout the play and groups the other players
         together in a new line where :
 
         - The 'Act' column contains the act
@@ -56,17 +59,24 @@ def replace_others(my_df):
             The df with all players not in the top
             5 for the play grouped as 'OTHER'
     '''
-    # DONE
+    # ELENA: NORMALEMENT THIS IS FINE BUT STILL CHECK IF THIS IS WHERE THE MISTAKE OCCURS
     my_df.rename(columns={'PlayerLine': 'LineCount','PlayerPercent': 'LinePercent' }, inplace=True)
-    top_5_players_per_act = my_df.sort_values(by='LineCount', ascending=False).groupby('Act').head(5)
-    other_players = my_df[~my_df.index.isin(top_5_players_per_act.index)]
-    other_players_grouped = other_players.groupby('Act').agg({
+    top_5_players_total = my_df.groupby('Player').sum().nlargest(5, 'LineCount').reset_index()
+    
+    top_5_players_per_act = pd.merge(my_df, top_5_players_total['Player'], on='Player', how='inner')
+    
+    other_players_per_act = my_df.groupby(['Act', 'Player']).sum().reset_index()
+    other_players_per_act = other_players_per_act[~other_players_per_act['Player'].isin(top_5_players_total['Player'])]
+    
+    
+    other_players_grouped = other_players_per_act.groupby('Act').agg({
         'LineCount': 'sum',
         'LinePercent': 'sum'
     }).reset_index()
-    other_players_grouped.columns = ['Act', 'LineCount', 'LinePercent']
     other_players_grouped['Player'] = 'OTHER'
-    result_df = pd.concat([top_5_players_per_act, other_players_grouped])
+
+    result_df = pd.concat([top_5_players_per_act, other_players_grouped], ignore_index=True)
+    
     return result_df
     
 

@@ -106,7 +106,7 @@ def init_app_layout(figure):
 @app.callback(
     [Output('line-chart', 'figure'), Output('mode', 'children')],
     [Input('radio-items', 'value')],
-    [State('line-chart', 'figure')]
+    [State('line-chart', 'figure')],
 )
 def radio_updated(mode, figure):
     '''
@@ -120,16 +120,13 @@ def radio_updated(mode, figure):
             mode: The new mode
     '''
     # DONE : Update the figure's data and y axis, as well as the informational
-    # text indicating the mode
-
+    data = prep_data()
     new_fig = figure
     new_fig = bar_chart.init_figure()
     new_fig = bar_chart.draw(new_fig, data, mode)
     new_fig = bar_chart.update_y_axis(new_fig, mode)
     return new_fig, mode
 
-
-data = prep_data()
 
 create_template()
 

@@ -24,7 +24,7 @@ def init_figure():
     # DONE : Update the template to include our new theme and set the title
 
     fig.update_layout(
-        template=pio.templates['simple_white'],
+        template=pio.templates['our_template'],
         dragmode=False,
         barmode='relative',
         title='Lines per act'
@@ -44,11 +44,21 @@ def draw(fig, data, mode):
         Returns:
             fig: The figure comprising the drawn bar chart
     '''
-    fig = go.Figure(fig)  # conversion back to Graph Object
-    # DONE : Update the figure's data according to the selected mode
-    column_title = MODE_TO_COLUMN[mode]
-    fig.update_traces(y=data[column_title])
-    fig.update_traces(hovertemplate=get_hover_template(data['Player'], mode))
+
+    fig = go.Figure(fig)
+    unique_players = sorted(data['Player'].unique())
+
+    for player in unique_players:
+        player_data = data[data['Player'] == player]
+        x_values = [f'Act {act}' for act in player_data['Act']]
+        y_values = player_data['LineCount'] if mode=="Count" else player_data['LinePercent']
+        fig.add_trace(go.Bar(
+            x=x_values,
+            y=y_values,
+            name=player,
+        ))
+
+    fig.update_traces(hovertemplate=get_hover_template(player, mode))
     return fig
 
 
