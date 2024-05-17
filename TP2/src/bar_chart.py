@@ -52,13 +52,15 @@ def draw(fig, data, mode):
         player_data = data[data['Player'] == player]
         x_values = [f'Act {act}' for act in player_data['Act']]
         y_values = player_data['LineCount'] if mode=="Count" else player_data['LinePercent']
+        hover_template = get_hover_template(player, mode)
         fig.add_trace(go.Bar(
             x=x_values,
             y=y_values,
             name=player,
+            customdata=y_values,
+            hovertemplate=hover_template
         ))
 
-    fig.update_traces(hovertemplate=get_hover_template(player, mode))
     return fig
 
 

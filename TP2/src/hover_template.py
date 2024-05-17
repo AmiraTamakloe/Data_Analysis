@@ -25,18 +25,16 @@ def get_hover_template(name, mode):
         Returns:
             The hover template with the elements described above
     '''
-    base_template = (
-        f"<span style='font-family: \"Grenze Gotisch\"; font-size: 24px; color: black;'>"
-        f"{name}</span><br>"
-    )
+    if mode == 'Count':
+        line_count_text = f'%{{customdata}} lines'
+    elif mode == 'Percent':
+        line_count_text = f'%{{customdata:.2f}}% of lines'
 
-    if mode == MODES['count']:
-        line_info_template = "<span>%{customdata[0]} lines</span>"
-    elif mode == MODES['percent']:
-        line_info_template = "<span>%{customdata[1]:.2f}% of lines</span>"
-    else:
-        raise ValueError("Invalid mode specified")
+    #FONT NOT WORKING
+    hover_template = (
+            f'<span style="font-family: Grenze Gotish; font-size: 24px; color: black;"><b>{name}</b></span><br>'
+            f'{line_count_text}'
+        )
+    #REMOVE THE TEMPLATE THAT IS NEXT TO IT...
 
-    full_template = base_template + line_info_template
-
-    return full_template
+    return hover_template
