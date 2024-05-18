@@ -26,14 +26,13 @@ def get_hover_template(name, mode):
             The hover template with the elements described above
     '''
     if mode == 'Count':
-        line_count_text = f'%{{customdata}} lines'
+        line_value = f'%{{customdata}} lines'
     elif mode == 'Percent':
-        line_count_text = f'%{{customdata:.2f}}% of lines'
+        line_value = f'%{{customdata:.2f}}% of lines'
 
     hover_template = (
         f'<span style="font-family: Grenze Gotisch, serif; font-size: 24px; color: black;"><b>{name}</b></span><br>'
         f'<br>'
-        f'<br>'
-        f'{line_count_text}<extra></extra>'
+        f'{line_value}<extra></extra>'
     )
     return hover_template
