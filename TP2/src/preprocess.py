@@ -23,16 +23,12 @@ def summarize_lines(my_df):
             information described above.
     '''
     # DONE : Modify the dataframe, removing the line content and replacing
-    # https://stackoverflow.com/questions/39922986/how-do-i-pandas-group-by-to-get-sum
-
-
-    #ELENA : THE LINECOUNT AND LINEPERCENT DONT HAVE TO CORRECT VALUES, THE WHOLE PLAY IS 600 LINES SO ITS IMPOSSIBLE THAT WE HAVE A CHARACTER THAT HAS 1000+ LINES
-    my_df = my_df.groupby(['Player', 'Act'])['Line'].sum().reset_index()
+    my_df = my_df.groupby(['Player', 'Act'])['Line'].count().reset_index()
     total_lines_per_act = my_df.groupby('Act')['Line'].sum().reset_index()
-    merged_df = my_df.merge(total_lines_per_act, on='Act', suffixes=('', '_total'))
-    merged_df['PlayerPercent'] = (merged_df['Line'] / merged_df['Line_total']) * 100
-    merged_df.rename(columns={'Line': 'PlayerLine'}, inplace=True)
-    merged_df = merged_df[['Act', 'Player', 'PlayerLine', 'PlayerPercent']]
+    my_df.rename(columns={'Line': 'PlayerLine'}, inplace=True)
+    total_lines_per_act.rename(columns={'Line': 'LineSum'}, inplace=True)
+    merged_df = pd.merge(my_df, total_lines_per_act, on='Act')
+    merged_df['PlayerPercent'] = (merged_df['PlayerLine'] / merged_df['LineSum']) * 100
     return merged_df
 
 
@@ -59,24 +55,18 @@ def replace_others(my_df):
             The df with all players not in the top
             5 for the play grouped as 'OTHER'
     '''
-    # ELENA: NORMALEMENT THIS IS FINE BUT STILL CHECK IF THIS IS WHERE THE MISTAKE OCCURS
+    # DONE : Replace the other players with 'OTHER'
     my_df.rename(columns={'PlayerLine': 'LineCount','PlayerPercent': 'LinePercent' }, inplace=True)
     top_5_players_total = my_df.groupby('Player').sum().nlargest(5, 'LineCount').reset_index()
-    
-    top_5_players_per_act = pd.merge(my_df, top_5_players_total['Player'], on='Player', how='inner')
-    
+    top_5_players_per_act = pd.merge(my_df, top_5_players_total['Player'], on='Player', how='inner') 
     other_players_per_act = my_df.groupby(['Act', 'Player']).sum().reset_index()
     other_players_per_act = other_players_per_act[~other_players_per_act['Player'].isin(top_5_players_total['Player'])]
-    
-    
     other_players_grouped = other_players_per_act.groupby('Act').agg({
         'LineCount': 'sum',
         'LinePercent': 'sum'
     }).reset_index()
     other_players_grouped['Player'] = 'OTHER'
-
     result_df = pd.concat([top_5_players_per_act, other_players_grouped], ignore_index=True)
-    
     return result_df
     
 
@@ -90,6 +80,5 @@ def clean_names(my_df):
             The df with formatted names
     '''
     # DONE : Clean the player names 
-    # https://www.w3resource.com/pandas/series/series-str-capitalize.php#:~:text=The%20str.,capitalize().
     my_df['Player'] = my_df['Player'].str.title()
     return my_df
