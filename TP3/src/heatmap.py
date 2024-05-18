@@ -19,7 +19,12 @@ def get_figure(data):
             The figure to be displayed.
     '''
 
-    # TODO : Create the heatmap. Make sure to set dragmode=False in
+    # DONE : Create the heatmap. Make sure to set dragmode=False in
     # the layout. Also don't forget to include the hover template.
-
-    return None
+    fig = px.imshow(
+        data,
+        labels=dict(x='Year', y='Neighborhood', color='Trees'),
+        x=[str(year) for year in range(2010, 2021)],
+        y=['Ahuntsic-Cartierville', 'Côte-des-Neiges - Notre-Dame-de-Grâce', 'LaSalle', 'Le Plateau-Mont-Royal', 'Le Sud-Ouest', 'Mercier - Hochelaga - Maisonneuve', 'Pierrefonds - Roxboro', 'Rivière-des-Prairies - Pointe-aux-Trembles', 'Rosemont - La Petite-Patrie', 'Saint-Laurent', 'Saint-Léonard',  'Verdun', 'Ville-Marie', 'Villeray-Saint-Michel - Parc-Extension'],
+    )
+    return fig
