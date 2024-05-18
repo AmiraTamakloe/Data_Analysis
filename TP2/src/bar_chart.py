@@ -21,8 +21,6 @@ def init_figure():
     '''
     fig = go.Figure()
 
-    # DONE : Update the template to include our new theme and set the title
-
     fig.update_layout(
         template=pio.templates['our_template'],
         dragmode=False,
@@ -74,7 +72,6 @@ def update_y_axis(fig, mode):
         Returns: 
             The updated figure
     '''
-    # DONE : Update the y axis title according to the current mode DONE
     y_axis_title= 'Lines (%)' if mode == MODES['percent'] else 'Lines (Count)'
     fig.update_yaxes(title_text=y_axis_title)
     return fig

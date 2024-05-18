@@ -22,14 +22,13 @@ def summarize_lines(my_df):
             The modified pandas dataframe containing the
             information described above.
     '''
-    # DONE : Modify the dataframe, removing the line content and replacing
     my_df = my_df.groupby(['Player', 'Act'])['Line'].count().reset_index()
     total_lines_per_act = my_df.groupby('Act')['Line'].sum().reset_index()
     my_df.rename(columns={'Line': 'PlayerLine'}, inplace=True)
     total_lines_per_act.rename(columns={'Line': 'LineSum'}, inplace=True)
-    merged_df = pd.merge(my_df, total_lines_per_act, on='Act')
-    merged_df['PlayerPercent'] = (merged_df['PlayerLine'] / merged_df['LineSum']) * 100
-    return merged_df
+    result_df = pd.merge(my_df, total_lines_per_act, on='Act')
+    result_df['PlayerPercent'] = (result_df['PlayerLine'] / result_df['LineSum']) * 100
+    return result_df
 
 
 def replace_others(my_df):
@@ -55,7 +54,6 @@ def replace_others(my_df):
             The df with all players not in the top
             5 for the play grouped as 'OTHER'
     '''
-    # DONE : Replace the other players with 'OTHER'
     my_df.rename(columns={'PlayerLine': 'LineCount','PlayerPercent': 'LinePercent' }, inplace=True)
     top_5_players_total = my_df.groupby('Player').sum().nlargest(5, 'LineCount').reset_index()
     top_5_players_per_act = pd.merge(my_df, top_5_players_total['Player'], on='Player', how='inner') 
@@ -80,6 +78,5 @@ def clean_names(my_df):
         Returns:
             The df with formatted names
     '''
-    # DONE : Clean the player names 
     my_df['Player'] = my_df['Player'].str.title()
     return my_df

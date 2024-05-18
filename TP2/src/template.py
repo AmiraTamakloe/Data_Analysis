@@ -46,20 +46,15 @@ def create_template():
 
     '''
     template = go.layout.Template()
-
     template.layout.font.family = THEME['font_family']
     template.layout.font.color = THEME['font_color']
-
     template.layout.paper_bgcolor = THEME['background_color']
     template.layout.plot_bgcolor = THEME['background_color']
-
     template.layout.hoverlabel.bgcolor = THEME['label_background_color']
     template.layout.hoverlabel.font.size = THEME['label_font_size']
     template.layout.hoverlabel.font.color = THEME['font_color']
     template.layout.hovermode = 'closest'
-
     template.layout.colorway = THEME['bar_colors']
-
     pio.templates['our_template'] = template
 
     return 'our_template'
