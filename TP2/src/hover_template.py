@@ -30,11 +30,10 @@ def get_hover_template(name, mode):
     elif mode == 'Percent':
         line_count_text = f'%{{customdata:.2f}}% of lines'
 
-    #FONT NOT WORKING
     hover_template = (
-            f'<span style="font-family: Grenze Gotish; font-size: 24px; color: black;"><b>{name}</b></span><br>'
-            f'{line_count_text}'
-        )
-    #REMOVE THE TEMPLATE THAT IS NEXT TO IT...
-
+        f'<span style="font-family: Grenze Gotisch, serif; font-size: 24px; color: black;"><b>{name}</b></span><br>'
+        f'<br>'
+        f'<br>'
+        f'{line_count_text}<extra></extra>'
+    )
     return hover_template
