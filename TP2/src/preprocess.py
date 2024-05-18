@@ -67,6 +67,7 @@ def replace_others(my_df):
     }).reset_index()
     other_players_grouped['Player'] = 'OTHER'
     result_df = pd.concat([top_5_players_per_act, other_players_grouped], ignore_index=True)
+    result_df.sort_values(by=['Act'], ascending=[True], inplace=True)
     return result_df
     
 
