@@ -11,14 +11,32 @@ def get_empty_figure():
     '''
         Returns the figure to display when there is no data to show.
 
-        The text to display is : 'No data to display. Select a cell
-        in the heatmap for more information.
-
+        The text to display is : 'No data to display. 
+        Select a cell in the heatmap for more information.
+        MUMU'S NOTE: WHAT DOES THE ABOVE MEAN
     '''
 
     # TODO : Construct the empty figure to display. Make sure to 
     # set dragmode=False in the layout.
-    return None
+    fig = px.line()
+
+    fig.add_annotation(
+        text='No data to display. Select a cell in the heatmap for more information.',
+        xref='paper',
+        yref='paper',
+        x=0.5,
+        y=0.5,
+        showarrow=False,
+        font=dict(size=15)
+    )
+
+    fig.update_layout(
+        dragmode=False,
+        xaxis=dict(visible=False),
+        yaxis=dict(visible=False)
+    )
+
+    return fig
 
 
 def add_rectangle_shape(fig):
@@ -32,7 +50,22 @@ def add_rectangle_shape(fig):
         0.25% to 0.75% the height of the figure.
     '''
     # TODO : Draw the rectangle
-    return None
+
+    pale_color = THEME['pale_color']
+
+    fig.add_shape(
+        type='rect',
+        x0=0,
+        x1=1,
+        y0=0.25,
+        y1=0.75,
+        xref='paper',
+        yref='paper',
+        line=dict(width=0),
+        fillcolor=pale_color
+    )
+
+    return fig
 
 
 def get_figure(line_data, arrond, year):
