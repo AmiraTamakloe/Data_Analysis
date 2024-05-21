@@ -30,5 +30,17 @@ def get_figure(data):
         y=['Ahuntsic-Cartierville', 'Côte-des-Neiges - Notre-Dame-de-Grâce', 'LaSalle', 'Le Plateau-Mont-Royal', 'Le Sud-Ouest', 'Mercier - Hochelaga - Maisonneuve', 'Pierrefonds - Roxboro', 'Rivière-des-Prairies - Pointe-aux-Trembles', 'Rosemont - La Petite-Patrie', 'Saint-Laurent', 'Saint-Léonard',  'Verdun', 'Ville-Marie', 'Villeray-Saint-Michel - Parc-Extension'],
         color_continuous_scale=THEME['colorscale']
     )
+
+    fig.update_layout(
+        dragmode=False,
+        hovermode='closest',
+        xaxis=dict(title='Year'),
+        yaxis=dict(title='Neighborhood'),
+        coloraxis_colorbar=dict(title='Trees')
+    )
+
+    fig.update_traces(
+        hovertemplate=hover_template.get_heatmap_hover_template()
+    )
     return fig
 
