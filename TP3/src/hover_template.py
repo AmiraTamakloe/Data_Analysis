@@ -28,7 +28,7 @@ def get_heatmap_hover_template():
 
 def get_linechart_hover_template():
     '''
-        Sets the template for the hover tooltips in the heatmap.
+        Sets the template for the hover tooltips in the linechart.
 
         Contains two labels, followed by their corresponding
         value, separated by a colon : date and trees planted.
@@ -37,4 +37,11 @@ def get_linechart_hover_template():
         are font 'Roboto' and regular weight.
     '''
     # TODO : Define and return the hover template
+    hover_template = (
+        "<span style='font-family: \"Roboto Slab\"; font-weight: bold;'>Date</span>: "
+        "<span style='font-family: \"Roboto\";'>%{x}</span><br>"
+        "<span style='font-family: \"Roboto Slab\"; font-weight: bold;'>Trees Planted</span>: "
+        "<span style='font-family: \"Roboto\";'>%{y}</span><extra></extra>"
+    )
+    return hover_template
 

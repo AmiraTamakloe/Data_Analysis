@@ -110,19 +110,16 @@ def get_figure(line_data, arrond, year):
     '''
     # TODO : Construct the required figure. Don't forget to include the hover template
 
-    line_data['Date_Plantation'] = pd.to_datetime(line_data['Date_Plantation'])
-    filtered_data = line_data[(line_data['Date_Plantation'].dt.year == year) & (line_data['Arrond_Nom'] == arrond)]
-
     # Generate the line chart
     fig = px.line(
-        filtered_data,
+        line_data,
         x='Date_Plantation',
         y='Trees',
         title=f'{arrond} - {year}',
         labels={
             'Date_Plantation': 'Date',
             'Trees': 'Trees'
-        }
+        },
     )
 
     fig.update_layout(
@@ -137,11 +134,11 @@ def get_figure(line_data, arrond, year):
             'x': 0.5
         }
     )
-
+    fig.update_traces(
+        hovertemplate=hover_template.get_linechart_hover_template()
+    )
     # Handle the case with only one data point
-    if len(filtered_data) == 1:
+    if len(line_data) == 1:
         fig.update_traces(mode='markers')
-
-    fig.show()
 
     return fig
