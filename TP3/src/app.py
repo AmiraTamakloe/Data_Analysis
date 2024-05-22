@@ -27,12 +27,12 @@ app = dash.Dash(__name__)
 app.title = 'TP3 | INF8808'
 
 dataframe = pd.read_csv('./assets/data/arbres.csv')
-
+print(dataframe.head())
 dataframe = preprocess.convert_dates(dataframe)
 dataframe = preprocess.filter_years(dataframe, 2010, 2020)
 yearly_df = preprocess.summarize_yearly_counts(dataframe)
 data = preprocess.restructure_df(yearly_df)
-
+print(data.head())
 template.create_custom_theme()
 template.set_default_theme()
 

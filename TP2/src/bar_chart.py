@@ -44,12 +44,12 @@ def draw(fig, data, mode):
     '''
 
     fig = go.Figure(fig)
-    unique_players = sorted(data['Player'].unique())
+    players = sorted(data['Player'].unique())
 
-    for player in unique_players:
-        player_data = data[data['Player'] == player]
-        x_values = [f'Act {act}' for act in player_data['Act']]
-        y_values = player_data['LineCount'] if mode=="Count" else player_data['LinePercent']
+    for player in players:
+        player_info = data[data['Player'] == player]
+        x_values = [f'Act {act}' for act in player_info['Act']]
+        y_values = player_info['LineCount'] if mode=="Count" else player_info['LinePercent']
         hover_template = get_hover_template(player, mode)
         fig.add_trace(go.Bar(
             x=x_values,
