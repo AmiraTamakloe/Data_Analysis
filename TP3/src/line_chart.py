@@ -110,7 +110,6 @@ def get_figure(line_data, arrond, year):
     '''
     # TODO : Construct the required figure. Don't forget to include the hover template
 
-    # Generate the line chart
     fig = px.line(
         line_data,
         x='Date_Plantation',
@@ -137,7 +136,7 @@ def get_figure(line_data, arrond, year):
     fig.update_traces(
         hovertemplate=hover_template.get_linechart_hover_template()
     )
-    # Handle the case with only one data point
+
     if len(line_data) == 1:
         fig.update_traces(mode='markers')
 
