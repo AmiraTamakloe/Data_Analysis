@@ -2,7 +2,7 @@
     Contains some functions to preprocess the data used in the visualisation.
 '''
 import pandas as pd
-
+import csv
 
 def convert_dates(dataframe):
     '''
@@ -94,11 +94,10 @@ def get_daily_info(dataframe, arrond, year):
             neighborhood and year.
     '''
     # TO FIX : Get daily tree count data and return
+
     dataframe['Date_Plantation'] = pd.to_datetime(dataframe['Date_Plantation'])
 
-    filtered_data = dataframe[(dataframe['Arrond_Nom'] == arrond) & (dataframe['Plantation_Year'] == year)]
-    #THIS SHOULD NOT BE EMPTY
-    print(filtered_data.head())
+    filtered_data = dataframe[(dataframe['Arrond_Nom'] == arrond) & (dataframe['Plantation_Year'] == int(year))]
     daily_info = filtered_data.groupby('Date_Plantation')['Counts'].sum().reset_index(name='Trees')
 
     return daily_info
