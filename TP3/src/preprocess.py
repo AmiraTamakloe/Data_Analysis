@@ -100,4 +100,5 @@ def get_daily_info(dataframe, arrond, year):
     filtered_data = dataframe[(dataframe['Arrond_Nom'] == arrond) & (dataframe['Plantation_Year'] == int(year))]
     daily_info = filtered_data.groupby('Date_Plantation')['Counts'].sum().reset_index(name='Trees')
 
+
     return daily_info

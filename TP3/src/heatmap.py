@@ -27,7 +27,7 @@ def get_figure(data):
         data,
         labels=dict(x='Year', y='Neighborhood', color='Trees'),
         x=[str(year) for year in range(2010, 2021)],
-        y=['Ahuntsic-Cartierville', 'Côte-des-Neiges - Notre-Dame-de-Grâce', 'LaSalle', 'Le Plateau-Mont-Royal', 'Le Sud-Ouest', 'Mercier - Hochelaga - Maisonneuve', 'Pierrefonds - Roxboro', 'Rivière-des-Prairies - Pointe-aux-Trembles', 'Rosemont - La Petite-Patrie', 'Saint-Laurent', 'Saint-Léonard',  'Verdun', 'Ville-Marie', 'Villeray-Saint-Michel - Parc-Extension'],
+        y=['Ahuntsic - Cartierville', 'Côte-des-Neiges - Notre-Dame-de-Grâce', 'LaSalle', 'Le Plateau-Mont-Royal', 'Le Sud-Ouest', 'Mercier - Hochelaga-Maisonneuve', 'Pierrefonds - Roxboro', 'Rivière-des-Prairies - Pointe-aux-Trembles', 'Rosemont - La Petite-Patrie', 'Saint-Laurent', 'Saint-Léonard',  'Verdun', 'Ville-Marie', 'Villeray-Saint-Michel - Parc-Extension'],
         color_continuous_scale=THEME['colorscale']
     )
 

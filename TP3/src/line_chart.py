@@ -57,7 +57,7 @@ def add_rectangle_shape(fig):
 
     fig.add_shape(
         type='rect',
-        x0=0, x1=1, y0=0.25, y1=0.75,
+        x0=0, x1=1, y0=0.0025, y1=0.0075,
         xref='paper', yref='paper',
         line=dict(width=0),
         fillcolor=pale_color
@@ -67,8 +67,8 @@ def add_rectangle_shape(fig):
         margin=dict(l=0, r=0, t=0, b=0),
         xaxis=dict(visible=False),
         yaxis=dict(visible=False),
-        paper_bgcolor=pale_color,
-        plot_bgcolor=pale_color,
+        paper_bgcolor='rgba(0,0,0,0)', 
+        plot_bgcolor='rgba(0,0,0,0)',
         shapes=[
             dict(
                 type='rect',
@@ -114,7 +114,6 @@ def get_figure(line_data, arrond, year):
         line_data,
         x='Date_Plantation',
         y='Trees',
-        title=f'{arrond} - {year}',
         labels={
             'Date_Plantation': 'Date',
             'Trees': 'Trees'
@@ -129,15 +128,26 @@ def get_figure(line_data, arrond, year):
         ),
         yaxis_title='Trees',
         title={
-            'text': f'{arrond} - {year}',
+            'text': f' Trees planted in {arrond} in {year}',
             'x': 0.5
         }
     )
+
     fig.update_traces(
         hovertemplate=hover_template.get_linechart_hover_template()
     )
 
     if len(line_data) == 1:
         fig.update_traces(mode='markers')
+
+        # FIXME: Afficher label for single date
+
+        # print('date')
+        # print(pd.to_datetime(line_data['Date_Plantation'].iloc[0]))
+        # single_date = pd.to_datetime(line_data['Date_Plantation'].iloc[0])
+        # fig.update_xaxes(
+        #     tickvals=[single_date],
+        #     ticktext=[single_date.strftime("%d-%b")]
+        # )
 
     return fig
