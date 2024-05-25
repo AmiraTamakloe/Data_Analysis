@@ -27,7 +27,19 @@ def get_plot(my_df, gdp_range, co2_range):
             The generated figure
     '''
     # TODO : Define figure with animation
-    return None
+    fig = px.scatter(
+        my_df, x="GDP", y="CO2",
+        animation_frame="Year", animation_group="Country Name",
+        size="Population", color="Continent", hover_name="Country Name",
+        log_x=True, log_y=True, range_x=gdp_range, range_y=co2_range,
+        size_max=30, color_discrete_sequence=px.colors.qualitative.Set1
+    )    
+    fig.update_traces(marker=dict(
+        sizemin=6
+    ))
+
+    return fig
+
 
 
 def update_animation_hover_template(fig):
@@ -43,7 +55,14 @@ def update_animation_hover_template(fig):
     '''
 
     # TODO : Set the hover template
-    return None
+    hover_text = hover_template.get_bubble_hover_template()
+    fig.update_traces(hovertemplate=hover_text)
+    
+    for frame in fig.frames:
+        for data in frame.data:
+            data.hovertemplate = hover_text
+    
+    return fig   
 
 
 def update_animation_menu(fig):
@@ -55,9 +74,31 @@ def update_animation_menu(fig):
             fig: The figure containing the menu to update
         Returns
             The updated figure
+
+            updatemenus=[dict(
+            type="buttons",
+            buttons=[dict(label="Play",
+                          method="animate",
+                          args=[None])])]
+    ),
     '''
     # TODO : Update animation menu
-    return None
+    fig.update_layout(
+        updatemenus=[dict(
+            type="buttons",
+            buttons=[dict(label="Play",
+                          method="animate",
+                          args=[None])
+                          ])],
+        sliders=[{
+            'currentvalue': {
+                'prefix': 'Data For Year:',
+                'visible': True,
+            },
+        }]
+    )
+    return fig
+
 
 
 def update_axes_labels(fig):
@@ -69,8 +110,12 @@ def update_axes_labels(fig):
         Returns:
             The updated figure
     '''
-    # TODO : Update labels
-    return None
+    # DONE : Update labels
+    fig.update_layout(
+        xaxis_title="GDP per Capita ($USD)",
+        yaxis_title="CO2 Emissions per Capita (Mertric Tons)"
+    )
+    return fig
 
 
 def update_template(fig):
@@ -83,8 +128,9 @@ def update_template(fig):
         Returns
             The updated figure
     '''
-    # TODO : Update template
-    return None
+    # DONE : Update template
+    fig.update_layout(template="simple_white")
+    return fig
 
 
 def update_legend(fig):
@@ -96,5 +142,6 @@ def update_legend(fig):
         Returns:
             The updated figure
     '''
-    # TODO : Update legend
-    return None
+    # DONE : Update legend
+    fig.update_layout(legend_title="Legend")
+    return fig
