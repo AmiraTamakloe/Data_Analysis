@@ -93,7 +93,6 @@ def get_daily_info(dataframe, arrond, year):
             The daily tree count data for that
             neighborhood and year.
     '''
-    # TO FIX : Get daily tree count data and return
 
     dataframe['Date_Plantation'] = pd.to_datetime(dataframe['Date_Plantation'])
 

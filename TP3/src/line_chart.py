@@ -115,7 +115,7 @@ def get_figure(line_data, arrond, year):
         x='Date_Plantation',
         y='Trees',
         labels={
-            'Date_Plantation': 'Date',
+            'Date_Plantation': '',
             'Trees': 'Trees'
         },
     )
@@ -139,15 +139,5 @@ def get_figure(line_data, arrond, year):
 
     if len(line_data) == 1:
         fig.update_traces(mode='markers')
-
-        # FIXME: Afficher label for single date
-
-        # print('date')
-        # print(pd.to_datetime(line_data['Date_Plantation'].iloc[0]))
-        # single_date = pd.to_datetime(line_data['Date_Plantation'].iloc[0])
-        # fig.update_xaxes(
-        #     tickvals=[single_date],
-        #     ticktext=[single_date.strftime("%d-%b")]
-        # )
 
     return fig
