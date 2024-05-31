@@ -25,7 +25,12 @@ def to_df(data):
             my_df: The corresponding dataframe
     '''
     # TODO : Convert JSON formatted data to dataframe
-    return None
+
+    dataframe = pd.read_json(data)
+    print('HERES YOUR DATA')
+    print(dataframe)
+
+    return dataframe
 
 
 def update_titles(my_df):
@@ -40,7 +45,10 @@ def update_titles(my_df):
                 made according to the 'TITLES' dictionary
     '''
     # TODO : Update the titles
-    return None
+
+    my_df['properties.TYPE_SITE_INTERVENTION'].replace(TITLES, inplace=True)
+
+    return my_df
 
 
 def sort_df(my_df):
@@ -54,6 +62,9 @@ def sort_df(my_df):
             my_df: The sorted dataframe
     '''
     # TODO : Sort the df
+    my_df.sort_values(by='properties.TYPE_SITE_INTERVENTION', inplace=True)
+    my_df.reset_index(drop=True, inplace=True)
+
     return None
 
 
@@ -68,4 +79,11 @@ def get_neighborhoods(montreal_data):
                 neighborhoods in the data set
     '''
     # TODO : Return the array of neighborhoods
-    return None
+
+    neighborhoods = []
+
+    for feature in montreal_data['features']:
+        if feature['properties']['TYPE'] == 'Arrondissement':
+            neighborhoods.append(feature['properties']['NOM'])
+
+    return neighborhoods
