@@ -74,28 +74,30 @@ def update_animation_menu(fig):
             fig: The figure containing the menu to update
         Returns
             The updated figure
-
-            updatemenus=[dict(
-            type="buttons",
-            buttons=[dict(label="Play",
-                          method="animate",
-                          args=[None])])]
     ),
     '''
     # TODO : Update animation menu
     fig.update_layout(
-        updatemenus=[dict(
-            type="buttons",
-            buttons=[dict(label="Play",
-                          method="animate",
-                          args=[None])
-                          ])],
-        sliders=[{
-            'currentvalue': {
-                'prefix': 'Data For Year:',
-                'visible': True,
-            },
-        }]
+        updatemenus=[],
+        sliders=[]
+    )
+    newupdatemenus = [dict(
+        type="buttons",
+        buttons=[dict(label="Play",
+                      method="animate",
+                      args=[None])],
+    )]
+
+    newsliders = [{
+        'currentvalue': {
+            'prefix': 'Data For Year:',
+            'visible': True,
+        },
+    }]
+    
+    fig.update_layout(
+        updatemenus=newupdatemenus,
+        sliders=newsliders,
     )
     return fig
 
