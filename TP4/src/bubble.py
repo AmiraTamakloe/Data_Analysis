@@ -94,7 +94,7 @@ def update_animation_menu(fig):
             'visible': True,
         },
     }]
-    
+    fig.layout.updatemenus[0].buttons = [fig.layout.updatemenus[0].buttons[0]]
     fig.update_layout(
         updatemenus=newupdatemenus,
         sliders=newsliders,
