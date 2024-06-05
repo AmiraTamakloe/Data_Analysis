@@ -27,18 +27,17 @@ def add_choro_trace(fig, montreal_data, locations, z_vals, colorscale):
         Returns:
             fig: The updated figure with the choropleth trace
     '''
-    # Draw the map base
     choro_trace = go.Choropleth(
         geojson=montreal_data,
         locations=locations,
         z=z_vals,
         colorscale=colorscale,
-        marker_line_color='white',  # Border color
-        marker_line_width=0.5,  # Border width
-        showscale=False,  # Hide color scale
-        hoverinfo='location+z',  # Customize hover information
-        hovertemplate=hover.custom_hover_template,  # Custom hover template if needed
-        opacity=0.2  # Set the opacity of the map background color
+        marker_line_color='white',  
+        marker_line_width=0.5,  
+        showscale=False,
+        hoverinfo='location+z', 
+        hovertemplate=hover.custom_hover_template,
+        opacity=0.2 
     )
 
     fig.add_trace(choro_trace)
@@ -65,8 +64,8 @@ def add_scatter_traces(fig, street_df):
     fig.add_trace(
         go.Scatter(
             mode='markers',
-            x=street_df['x'],  # Assuming 'x' column exists in street_df
-            y=street_df['y'],  # Assuming 'y' column exists in street_df
+            x=street_df['x'],
+            y=street_df['y'],  
             marker=dict(
                 color='LightSkyBlue',
                 size=20,
