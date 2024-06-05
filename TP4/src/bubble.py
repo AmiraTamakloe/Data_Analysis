@@ -76,7 +76,25 @@ def update_animation_menu(fig):
             The updated figure
     ),
     '''
-    # TODO : Update animation menu
+
+    fig.update_layout(updatemenus=[])
+
+    # Define the new updatemenus with only the 'Play' button
+    new_updatemenus = [dict(
+        type="buttons",
+        buttons=[
+            dict(
+                label="Play",
+                method="animate",
+                args=[None]
+            )
+        ]
+    )]
+
+    # Update the layout with the new updatemenus
+    fig.update_layout(updatemenus=new_updatemenus)
+
+    # Define and set the sliders layout
     fig.update_layout(
         updatemenus=[],
         sliders=[]
@@ -99,6 +117,10 @@ def update_animation_menu(fig):
         updatemenus=newupdatemenus,
         sliders=newsliders,
     )
+
+    # Print the updated layout for debugging
+    print("Updated layout updatemenus:", fig.layout.updatemenus)
+    
     return fig
 
 

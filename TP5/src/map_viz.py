@@ -8,7 +8,6 @@ import plotly.express as px
 
 import hover_template as hover
 
-
 def add_choro_trace(fig, montreal_data, locations, z_vals, colorscale):
     '''
         Adds the choropleth trace, representing Montreal's neighborhoods.
@@ -27,10 +26,24 @@ def add_choro_trace(fig, montreal_data, locations, z_vals, colorscale):
             colorscale: The table to use for the choropleth's color scale
         Returns:
             fig: The updated figure with the choropleth trace
-
     '''
-    # TODO : Draw the map base
-    return None
+    # Draw the map base
+    choro_trace = go.Choropleth(
+        geojson=montreal_data,
+        locations=locations,
+        z=z_vals,
+        colorscale=colorscale,
+        marker_line_color='white',  # Border color
+        marker_line_width=0.5,  # Border width
+        showscale=False,  # Hide color scale
+        hoverinfo='location+z',  # Customize hover information
+        hovertemplate=hover.custom_hover_template,  # Custom hover template if needed
+        opacity=0.2  # Set the opacity of the map background color
+    )
+
+    fig.add_trace(choro_trace)
+
+    return fig
 
 
 def add_scatter_traces(fig, street_df):
@@ -48,4 +61,22 @@ def add_scatter_traces(fig, street_df):
 
     '''
     # TODO : Add the scatter markers to the map base
-    return None
+
+    fig.add_trace(
+        go.Scatter(
+            mode='markers',
+            x=street_df['x'],  # Assuming 'x' column exists in street_df
+            y=street_df['y'],  # Assuming 'y' column exists in street_df
+            marker=dict(
+                color='LightSkyBlue',
+                size=20,
+                line=dict(
+                    color='MediumPurple',
+                    width=2
+                )
+            ),
+            showlegend=False
+        )
+    )
+
+    return fig
