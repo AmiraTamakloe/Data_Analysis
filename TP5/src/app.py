@@ -45,7 +45,7 @@ fig = go.Figure()
 colorscale = ['#CDD1C4', '#CDD1C4']
 
 fig = map_viz.add_choro_trace(fig, montreal_data, locations, z, colorscale)
-fig = map_viz.add_scatter_traces(fig, street_df, )
+fig = map_viz.add_scatter_traces(fig, street_df)
 
 fig = helper.adjust_map_style(fig)
 fig = helper.adjust_map_sizing(fig)
