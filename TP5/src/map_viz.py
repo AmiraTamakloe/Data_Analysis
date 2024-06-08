@@ -28,18 +28,18 @@ def add_choro_trace(fig, montreal_data, locations, z_vals, colorscale):
             fig: The updated figure with the choropleth trace
     '''
 
-    # choro_trace = go.Choropleth(
-    #     geojson=montreal_data,
-    #     locations=locations,
-    #     z=z_vals,
-    #     colorscale=colorscale,
-    #     marker_line_color='white', 
-    #     marker_line_width=0.5, 
-    #     showscale=False,  
-    #     hoverinfo='location+z',  
-    # )
 
-    # fig.add_trace(choro_trace)
+    location_id_map = {feature['properties']['NOM']: feature['properties']['CODEID'] for feature in montreal_data['features']}
+    location_ids = [location_id_map[loc] for loc in locations if loc in location_id_map]
+    z_vals = z_vals[:len(location_ids)]
+
+    fig.add_trace(go.Choropleth(
+        geojson=montreal_data,
+        locations=location_ids,
+        z=z_vals, 
+        featureidkey="properties.CODEID",
+        colorscale=colorscale,
+    ))
 
     return fig
 
