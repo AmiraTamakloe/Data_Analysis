@@ -7,7 +7,6 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 import hover_template as hover
-import preprocess as preproc
 
 def add_choro_trace(fig, montreal_data, locations, z_vals, colorscale):
     '''

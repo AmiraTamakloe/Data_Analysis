@@ -24,8 +24,6 @@ def no_clicks(style):
     '''
     # TODO : Handle no clicks on the map
 
-
-
     return None, None, None, None
 
 
@@ -100,6 +98,7 @@ def map_marker_clicked(figure, curve, point, title, mode, theme, style): # noqa 
                         'padding': '10px',
                         'fontFamily': 'Arial, sans-serif',
                     }
+
                 for trace in figure['data']:
                     if trace['type'] == 'scattermapbox':
                         if (latitude in trace['lat'] and
