@@ -86,9 +86,9 @@ def map_marker_clicked(figure, curve, point, title, mode, theme, style): # noqa 
                     items = thematic_objectives.split('\n')
 
                     formatted_themes = f""
-                    formatted_themes += f"Thématique :\n"
+                    formatted_themes += f"Thématique :\r"
                     for item in items:
-                        formatted_themes += f"   • {item} \n"
+                        formatted_themes += f"   • {item} \r"
 
                 if style is None:
                     style = {
