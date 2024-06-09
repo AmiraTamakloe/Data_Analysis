@@ -7,6 +7,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 import hover_template as hover
+import preprocess as preproc
 
 def add_choro_trace(fig, montreal_data, locations, z_vals, colorscale):
     '''
@@ -28,16 +29,11 @@ def add_choro_trace(fig, montreal_data, locations, z_vals, colorscale):
             fig: The updated figure with the choropleth trace
     '''
 
-
-    location_id_map = {feature['properties']['NOM']: feature['properties']['CODEID'] for feature in montreal_data['features']}
-    location_ids = [location_id_map[loc] for loc in locations if loc in location_id_map]
-    z_vals = z_vals[:len(location_ids)]
-
-    fig.add_trace(go.Choropleth(
+    fig.add_trace(go.Choroplethmapbox(
         geojson=montreal_data,
-        locations=location_ids,
+        locations=locations,
         z=z_vals, 
-        featureidkey="properties.CODEID",
+        featureidkey="properties.NOM",
         colorscale=colorscale,
     ))
 
@@ -62,6 +58,7 @@ def add_scatter_traces(fig, street_df):
     
     x_values = street_df['X'].tolist()
     y_values = street_df['Y'].tolist()
+    hover_texts = [hover.map_marker_hover_template(row['NOM_PROJET']) for index, row in street_df.iterrows()]
 
     fig.add_trace(
         go.Scatter(
@@ -76,7 +73,9 @@ def add_scatter_traces(fig, street_df):
                     width=2
                 )
             ),
-            showlegend=False
+            showlegend=False,
+            hoverinfo='text',
+            hovertext=hover_texts
         )
     )
 

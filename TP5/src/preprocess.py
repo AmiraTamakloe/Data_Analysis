@@ -91,7 +91,6 @@ def get_neighborhoods(montreal_data):
     neighborhoods = []
 
     for feature in montreal_data['features']:
-        if feature['properties']['TYPE'] == 'Arrondissement':
-            neighborhoods.append(feature['properties']['NOM'])
+        neighborhoods.append(feature['properties']['NOM'])
 
     return neighborhoods
