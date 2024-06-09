@@ -42,9 +42,7 @@ def map_base_clicked(title, mode, theme, style):
     '''
     # TODO : Handle clicks on the map base
 
-    
-
-    return None, None, None, None
+    return title, 'mode', 'THEME', 'STYLE'
 
 
 def map_marker_clicked(figure, curve, point, title, mode, theme, style): # noqa : E501 pylint: disable=unused-argument too-many-arguments line-too-long

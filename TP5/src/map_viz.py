@@ -35,6 +35,9 @@ def add_choro_trace(fig, montreal_data, locations, z_vals, colorscale):
         z=z_vals, 
         featureidkey="properties.NOM",
         colorscale=colorscale,
+        marker_opacity=0.2,
+        marker_line_width=1,
+        hovertemplate=hover.map_base_hover_template()
     ))
 
     return fig
@@ -56,27 +59,24 @@ def add_scatter_traces(fig, street_df):
     '''
     # TODO : Add the scatter markers to the map base
     
-    x_values = street_df['X'].tolist()
-    y_values = street_df['Y'].tolist()
-    hover_texts = [hover.map_marker_hover_template(row['NOM_PROJET']) for index, row in street_df.iterrows()]
+    legend_values = street_df['TYPE_SITE_INTERVENTION']
+    unique_legend_values = legend_values.unique()
 
-    fig.add_trace(
-        go.Scatter(
+    for index, value in enumerate(unique_legend_values):
+        project_properties = street_df[legend_values == value]
+        x_vals = project_properties['LONGITUDE']
+        y_vals = project_properties['LATITUDE']
+        hover_text = [hover.map_marker_hover_template(row['TYPE_SITE_INTERVENTION']) for index, row in project_properties.iterrows()]
+
+        fig.add_scattermapbox(
             mode='markers',
-            x=x_values,
-            y=y_values,  
-            marker=dict(
-                color='LightSkyBlue',
-                size=20,
-                line=dict(
-                    color='MediumPurple',
-                    width=2
-                )
-            ),
-            showlegend=False,
+            lon=x_vals,
+            lat=y_vals, 
+            marker_size=15,
+            name=value,
+            showlegend=True,
             hoverinfo='text',
-            hovertext=hover_texts
+            hovertext=hover_text
         )
-    )
 
     return fig
